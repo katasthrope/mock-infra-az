@@ -1,4 +1,4 @@
-name: Deploy Infrastructure Template
+name: Deploy Dev Environment
 
 on:
   workflow_dispatch:
@@ -9,33 +9,29 @@ on:
         type: choice
         options:
           - development
-          - production
       
       deploy-base-infra:
         description: "Deploy Base Infrastructure"
         required: true
         type: boolean
         default: true
-      
-      deploy-security:
-        description: "Deploy Module Security"
-        required: true
-        type: boolean
-        default: false
-      
-      deploy-cluster:
-        description: "Deploy Module Cluster"
-        required: true
-        type: boolean
-        default: false
 
 jobs:
-  echo-parameters:
+  deploy-environment:
     runs-on: ubuntu-latest
     steps:
       - name: Show inputs
         run: |
           echo "Environment : ${{ inputs.environment }}"
           echo "Deploy Base Infra : ${{ inputs.deploy-base-infra }}"
-          echo "Deploy Security Module : ${{ inputs.deploy-security }}"
-          echo "Deploy Cluster Module : ${{ inputs.deploy-cluster }}"
+      
+      - name: Provision Development Resources
+        run: |
+          echo "Checking AZ"
+          if command -v az >/dev/null 2>&1; then
+              echo "Azure CLI is installed."
+              az version
+          else
+              echo "Azure CLI is not installed."
+              exit 1
+          fi
