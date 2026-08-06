@@ -1,4 +1,4 @@
-name: Manual Trigger Workflow
+name: Deploy Infrastructure Template
 
 on:
   workflow_dispatch:
@@ -11,10 +11,23 @@ on:
           - development
           - production
       
-      deploy-base:
-        description: "Deployment Base Infrastructure"
+      deploy-base-infra:
+        description: "Deploy Base Infrastructure"
         required: true
         type: boolean
+        default: true
+      
+      deploy-security:
+        description: "Deploy Module Security"
+        required: true
+        type: boolean
+        default: false
+      
+      deploy-cluster:
+        description: "Deploy Module Cluster"
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   echo-parameters:
@@ -22,7 +35,7 @@ jobs:
     steps:
       - name: Show inputs
         run: |
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Version: ${{ inputs.version }}"
-          echo "Dry Run: ${{ inputs.dry_run }}"
-          echo "Replicas: ${{ inputs.replicas }}"
+          echo "Environment : ${{ inputs.environment }}"
+          echo "Deploy Base Infra : ${{ inputs.deploy-base-infra }}"
+          echo "Deploy Security Module : ${{ inputs.deploy-security }}"
+          echo "Deploy Cluster Module : ${{ inputs.deploy-cluster }}"
