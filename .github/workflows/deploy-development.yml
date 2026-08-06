@@ -68,8 +68,10 @@ jobs:
       #     echo "Current subscription:"
       #     az account show --query "{Name:name, Subscription:id, Tenant:tenantId}" --output table
       
-      - name: Make script executable
-        run: chmod +x ./scripts/*.sh
+      - name: Setup Scripts
+        shell: bash
+        run: |
+          chmod +x ./scripts/*.sh
       
       - name: Provision
         shell: bash
