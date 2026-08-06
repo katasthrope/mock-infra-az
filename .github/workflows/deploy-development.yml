@@ -42,6 +42,7 @@ jobs:
           fi
 
   deploy-environment:
+    needs: pre-deploy-checks
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
@@ -71,5 +72,4 @@ jobs:
         shell: bash
         run: |
           echo "Placeholder"
-          pwd
-          # ... deploy script
+          ./scripts/deploy-env.sh
